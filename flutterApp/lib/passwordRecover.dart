@@ -96,12 +96,14 @@ class ForgotPasswordState extends State<ForgotPasswordPopup> {
         return new CircularProgressIndicator();
       },
     );
-
+/*
+//NOT BEING USED, TEMPORARILY COMMENTED OUT
     Widget listOptions = SimpleDialogOption(
         child: Container(
             child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+ 
         // Row(
         //   children: <Widget>[
         //     Radio(
@@ -120,7 +122,7 @@ class ForgotPasswordState extends State<ForgotPasswordPopup> {
         // ),
       ],
     )));
-
+*/
     SimpleDialog passwordDialog = SimpleDialog(
       title: Text(
           "Before you can reset your password, you must answer a question.",

@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 //import 'questionaire.dart';
-import 'menuWidgets.dart';
+//import 'menuWidgets.dart';
 import 'choosefounder.dart';
 
 class DeliverableTile extends StatefulWidget {
@@ -30,14 +30,16 @@ class DeliverableTileState extends State<DeliverableTile> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Deliverable Workshop",
-                  style: new TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Deliverable Workshop",
+                    style: new TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -45,7 +47,7 @@ class DeliverableTileState extends State<DeliverableTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(

@@ -14,8 +14,6 @@ class RemoveEvaluator extends StatefulWidget
 
 class RemoveEvaluatorState extends State<RemoveEvaluator>
 {
-  @override
-
   void fetchEvaluators() async {
     const url = 'https://projectworkflow.firebaseio.com/Evaluators.json';
     final response = await http.get(url);

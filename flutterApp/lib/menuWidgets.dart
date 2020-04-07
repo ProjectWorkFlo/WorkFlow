@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/rendering.dart';
+//COMMENTED OUT ALL PACKAGES THAT AREN'T BEING USED
+//
+//import 'package:flutter/material.dart';
+//import 'package:flutter/widgets.dart';
+//import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pdfz;
-import 'dart:io';
+//import 'package:path_provider/path_provider.dart';
+//import 'package:pdf/pdf.dart';
+//import 'package:pdf/widgets.dart' as pdfz;
+//import 'dart:io';
 
 
 

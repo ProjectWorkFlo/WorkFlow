@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'eval.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:firebase_database/firebase_database.dart';
+//Debugging v for the problems (v indicates down)
+//import 'package:firebase_database/firebase_database.dart';
 
 //add in a warning bax before the deletion of the evaluator 3/29/20
 
@@ -17,7 +18,8 @@ class EvalRmv extends StatefulWidget {
 
 //clean up the fetching code
 class EvalRmvState extends State<EvalRmv> {
-  static FirebaseDatabase _database = FirebaseDatabase.instance;
+  //Testing to see if we need this (Going through the problems... )
+  //static FirebaseDatabase _database = FirebaseDatabase.instance;
   Iterable<String> keysFromMap;
   String temp;
 

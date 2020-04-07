@@ -3,8 +3,8 @@ import 'package:flutterApp/widgets.dart';
 import 'package:intl/intl.dart';
 
 class WebpageReport extends StatelessWidget {
-  DateTime date = DateTime.now();
-  var pitchName = "pitchNameHere";
+  final DateTime date = DateTime.now();
+  final pitchName = "pitchNameHere";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

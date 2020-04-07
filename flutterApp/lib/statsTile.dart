@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'dart:math';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Statistics {
   int avgFormScores = 0;
@@ -60,32 +60,73 @@ class StatsTileState extends State<StatsTile> {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CircularPercentIndicator(
-                    radius: MediaQuery.of(context).size.longestSide * .16,
-                    animation: true,
-                    animationDuration: 2000,
-                    lineWidth: MediaQuery.of(context).size.height * .015,
-                    percent: snapshot.data / 5,
-                    reverse: false,
-                    arcBackgroundColor: Colors.red,
-                    arcType: ArcType.HALF,
-                    center: Text(
-                      "${snapshot.data}",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.white,),
-                    ),
-                    circularStrokeCap: CircularStrokeCap.round,
-                    backgroundColor: Colors.transparent,
-                    progressColor: Colors.blue,
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                CircularPercentIndicator(
+                  header: AutoSizeText(
+                    'Overall Rating Given',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                    minFontSize: 8,
+                    maxLines: 1,
                   ),
-                ],
-              ),
-            ],
+                  radius: MediaQuery.of(context).size.height * .25,
+                  animation: true,
+                  animationDuration: 2000,
+                  lineWidth: MediaQuery.of(context).size.height * .015,
+                  percent: snapshot.data / 5,
+                  reverse: false,
+                  arcBackgroundColor: Colors.red,
+                  arcType: ArcType.FULL,
+                  center: AutoSizeText(
+                    "${(snapshot.data).toStringAsFixed(2)}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                    maxFontSize: 26,
+                    maxLines: 1,
+                  ),
+                  circularStrokeCap: CircularStrokeCap.round,
+                  backgroundColor: Colors.transparent,
+                  progressColor: Colors.blue,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * .033,
+                    0,
+                    0,
+                    0,
+                  ),
+                  child: Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.info_outline,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.01),
+                        Expanded(
+                          child: Text(
+                            "This number represents the forms' overall score",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       } else if (snapshot.hasError) {
@@ -108,19 +149,31 @@ class StatsTileState extends State<StatsTile> {
         ),
       ),
       padding: const EdgeInsets.all(8),
+
+      //child: fetchStatz,
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text("Average Score Given", style: TextStyle(color: Colors.white,),),
-                ),
-              ),
-            ],
-          ),
           fetchStatz,
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: <Widget>[
+          //     Icon(
+          //       Icons.info_outline,
+          //       size: 16,
+          //       color: Colors.white,
+          //     ),
+          //     SizedBox(width: MediaQuery.of(context).size.width * 0.01   ),
+          //     Expanded(
+          //                     child: Text(
+          //         "This number represents the forms' overall score",
+          //         style: TextStyle(
+          //           color: Colors.white,
+          //           fontSize: 12,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

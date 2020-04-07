@@ -71,10 +71,10 @@ class LoginFormState extends State<LoginForm> {
             //or use media query class
             child: Container(
               padding: EdgeInsets.fromLTRB(
-                  MediaQuery.of(context).size.width * 0.40,
-                  MediaQuery.of(context).size.width * 0.10,
-                  MediaQuery.of(context).size.width * 0.40,
-                  MediaQuery.of(context).size.width * 0.10),
+                  screenSize.width * 0.40,
+                  screenSize.width * 0.10,
+                  screenSize.width * 0.40,
+                  screenSize.width * 0.10),
               child: Column(children: <Widget>[
 //////////////////////////////////////Text Fields
                 new MyImageWidget(),
@@ -102,6 +102,8 @@ class LoginFormState extends State<LoginForm> {
                       return ('Please type in a valid email address');
                     }
                     _email = value;
+                    //Added this to get rid of the problem (PLEASE DELETE IF IT CAUSES AN ISSUE!)
+                    return null;
                   },
                 ),
                 Padding(
@@ -128,6 +130,8 @@ class LoginFormState extends State<LoginForm> {
                         return ('Password is invalid.');
                       }
                       _password = value;
+                      //Added this to get rid of the problem (PLEASE DELETE IF IT CAUSES AN ISSUE!)
+                      return null;
                     },
                   ),
                 ),

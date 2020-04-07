@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'evalform.dart';
 import 'evalrmv.dart';
 import 'evaledit.dart';
+//import 'package:auto_size_text/auto_size_text.dart';
 
 class EvalTile extends StatefulWidget {
   @override
@@ -29,15 +30,17 @@ class EvalTileState extends State<EvalTile> {
       child: Column(
         children: <Widget>[
           Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Evaluator Workshop",
-                  style: new TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+            children: <Widget>[ //
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Evaluator Workshop",
+                    style: new TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -45,7 +48,7 @@ class EvalTileState extends State<EvalTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+             padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
@@ -68,7 +71,7 @@ class EvalTileState extends State<EvalTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
@@ -91,7 +94,7 @@ class EvalTileState extends State<EvalTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(

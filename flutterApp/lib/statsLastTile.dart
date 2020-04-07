@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Statistics {
   int numberOfCompanies = 0;
@@ -39,15 +40,24 @@ class StatsLastTile extends StatefulWidget {
 }
 
 class StatsLastTileState extends State<StatsLastTile> {
-  // @override
-//////////////////////////////////////////////
-
   Widget fetchStatz = FutureBuilder<int>(
     future: fetchStats(),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-          child: Text("${snapshot.data}"),
+          child: Expanded(
+                      child: AutoSizeText(
+                  "${snapshot.data}",
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontSize: 125,
+                      fontWeight: FontWeight.bold),
+                  minFontSize: 20,
+                  maxLines: 1,
+                 // textAlign: TextAlign.center,
+                ),
+                      
+          ),
         );
       } else if (snapshot.hasError) {
         return new Text("${snapshot.error}");
@@ -74,27 +84,29 @@ class StatsLastTileState extends State<StatsLastTile> {
           Row(
             children: <Widget>[
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text("Number of Companies",
-                      style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      )),
+                child: AutoSizeText(
+                  "Number of Companies",
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  minFontSize: 8,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
           ),
           Flexible(
-            child: Text("some chart here", style: TextStyle(color: Colors.white,),),
-            //GAUGE CAN GO HERE!
-          ),
-          Flexible(
-            child: Card(
-              //shadowColor: Colors.blue[900],
-              child: fetchStatz,
+            child: Divider(
+              indent: 0,
+              endIndent: 0,
+              color: Colors.blue,
+              thickness: 1.0,
             ),
           ),
+          
+          fetchStatz,
         ],
       ),
     );
