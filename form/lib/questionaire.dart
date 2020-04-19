@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './textWidget.dart';
+import './nameDropdown.dart';
+import './companyDropdown.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import './questionaireResponse.dart';
@@ -45,15 +47,14 @@ Map map = {
   'internalFeedback': '(Optional) Internal Feedback: Empty',
   'storedValues': new List(12),
   'dayOfWeek': 'Day of the week',
+  'month' : 'month',
 };
 
 final List<int> recordedValues = new List(12);
 bool nullFlag = false;
-bool firstLastEmail = false;
 
 void setValue(int index, int newValue) {
   map['storedValues'][index] = newValue;
-  print("Map at storedValues index [$index] is ${map['storedValues'][index]}");
 }
 
 void setOutput(String destination, String host) {
@@ -61,9 +62,6 @@ void setOutput(String destination, String host) {
 }
 
 class MyHomePage extends StatelessWidget {
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
   final feedbackForFounderController = TextEditingController();
   final internalFeedbackController = TextEditingController();
   final inputText = "Please rate from 1-5";
@@ -72,9 +70,6 @@ class MyHomePage extends StatelessWidget {
 
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    firstNameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
     feedbackForFounderController.dispose();
     internalFeedbackController.dispose();
   }
@@ -82,7 +77,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    map['pitchName'] = "startUpName";
+    map['pitchName'] = "Software StartUp";
 
     Future<void> addAssessment() {
       const url = 'https://projectworkflow.firebaseio.com/Assessments.json';
@@ -109,7 +104,8 @@ class MyHomePage extends StatelessWidget {
             'feedbackForFounder': map['feedbackForFounder'],
             'internalFeedback': map['internalFeedback'],
             'storedValues': map['storedValues'],
-            'dayOfWeek': map['dayOfWeek']
+            'dayOfWeek': map['dayOfWeek'],
+            'month' : map['month'],
           },
         ),
       );
@@ -120,7 +116,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900], //changed 4/4/2020
         title: Text(
-          "startUpName", // changed here on 4/2/2020
+          map['pitchName'], // changed here on 4/2/2020
           style: TextStyle(fontSize: 35),
         ),
       ),
@@ -142,30 +138,8 @@ class MyHomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: firstNameController,
-                      decoration:
-                          const InputDecoration(helperText: "First name"),
-                    ),
-                  ),
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: lastNameController,
-                      decoration:
-                          const InputDecoration(helperText: "Last name"),
-                    ),
-                  ),
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: emailController,
-                      decoration:
-                          const InputDecoration(helperText: "Email on file"),
-                    ),
-                  ),
+                  NameDropdown(),
+                  CompanyDropdown(),
                 ],
               ),
               Row(
@@ -474,7 +448,6 @@ class MyHomePage extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: RaisedButton(
                   onPressed: () async {
-                    print("This should take us to the new page");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -482,6 +455,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     );
                   },
+                  child: Text('Generate Report'),
                 ),
               ),
               Align(
@@ -489,23 +463,9 @@ class MyHomePage extends StatelessWidget {
                 child: RaisedButton(
                   onPressed: () {
                     for (var i in map['storedValues']) {
-                      print('$i');
                       if (i == null) {
-                        print("I IS NULL AT INDEX $i");
                         nullFlag = true;
                       }
-                    }
-                    if (firstNameController.text == null) {
-                      print("Error, first name not entered");
-                      firstLastEmail = true;
-                    }
-                    if (lastNameController.text == null) {
-                      print("Error, first name not entered");
-                      firstLastEmail = true;
-                    }
-                    if (emailController.text == null) {
-                      print("Error, first name not entered");
-                      firstLastEmail = true;
                     }
                     if (nullFlag == true) {
                       return showDialog(
@@ -518,32 +478,25 @@ class MyHomePage extends StatelessWidget {
                             );
                           });
                     } else if (nullFlag != true) {
-                      map['firstName'] = firstNameController.text;
-                      map['lastName'] = lastNameController.text;
-                      map['email'] = emailController.text;
                       map['feedbackForFounder'] =
                           feedbackForFounderController.text;
                       map['internalFeedback'] = internalFeedbackController.text;
                       map['dayOfWeek'] = DateFormat('EEEE').format(date);
+                      map['month'] = DateFormat('MMMM').format(date);
 
                       // Nick Function here
                       addAssessment();
-
                       return showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            // Retrieve the text the that user has entered by using the
-                            // TextEditingController.
-                            content: Text(map['pitchName'] +
+                            // Retrieve the text the that user has entered by using the controller
+                            content: Text(
+                                "Successfully recorded values!" + map['pitchName'] +
                                 '\n' +
-                                map['dayOfWeek'] +
+                                map['dayOfWeek'] + 
                                 '\n' +
-                                map['firstName'] +
-                                '\n' +
-                                map['lastName'] +
-                                '\n' +
-                                map['email'] +
+                                map['month'] +
                                 '\n' +
                                 map['productKnowledge'] +
                                 '\n' +
@@ -571,12 +524,13 @@ class MyHomePage extends StatelessWidget {
                                 '\n' +
                                 map['feedbackForFounder'] +
                                 '\n' +
-                                map['internalFeedback']), // +
+                                map['internalFeedback']
+                                ), // +
                           );
                         },
                       );
                     }
-                    return null;
+                    //return null;
                   },
                   child: Text('Submit'),
                 ),

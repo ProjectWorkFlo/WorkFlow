@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutterApp/widgets.dart';
-import 'package:intl/intl.dart';
+
 
 class WebpageReport extends StatelessWidget {
   final DateTime date = DateTime.now();
-  final pitchName = "pitchNameHere";
+  final pitchName = "Software StartUp";
+ 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[350],
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blueGrey[900],
         title: Text(
           "$pitchName",
           style: TextStyle(fontSize: 35),
@@ -23,84 +26,122 @@ class WebpageReport extends StatelessWidget {
               child: MyImageWidget(),
             ),
             Text(
-              "Pitch Evaluations Summary for today, ${ DateFormat('EEEE').format(date)}",
+              "Pitch Evaluations Summary for (companyName)\n",
               style: TextStyle(
                 fontSize: 25,
               ),
             ),
             Container(
+              width: MediaQuery.of(context).size.width * 0.3,
               child: Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
+                columnWidths: {
+                  0: FractionColumnWidth(0.6),
+                  1: FractionColumnWidth(0.2),
+                  2: FractionColumnWidth(0.2),
+                },
+
                 children: [
                   TableRow(children: [
+                    Text(
+                      "Metric",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    Text(
+                      "Score",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    Text(
+                      "Range",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ]),
+                  TableRow(children: [
                     Text("Overall"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("3"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Product Knowledge"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("4"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Product Feasibility"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("3"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Market Knowledge"),
-                    Text("Test"),
-                    Text("Test2"),
+                    Text("3.4"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Market Execution Ability"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("4"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Customer Persona Knowledge"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("3"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Customer Buy/Execution"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("4"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Competition Knowledge"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("3"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Competition Execution"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("2"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Founder Exp in Market"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("2"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Founder Biz Exp"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("4"),
+                    Text("0-4"),
                   ]),
                   TableRow(children: [
                     Text("Coachable Founder"),
-                    Text("Test2"),
-                    Text("Test2"),
+                    Text("1"),
+                    Text("0-4"),
                   ]),
                 ],
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                defaultColumnWidth: IntrinsicColumnWidth(),
-
                 //border: TableBorder.all(),
               ),
             ),
+            Text(
+              "\n\nFeedback",
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 20,
+              ),
+            ),
+            Text("\n\nThis is where external feedback will be placed\n\n"),
+            Text("This is where internal feedback will be placed"),
           ],
         ),
       ),
+      
     );
   }
 }

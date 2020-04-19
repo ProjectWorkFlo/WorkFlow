@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './customRadioButton.dart';
 import './questionaire.dart';
 
@@ -28,6 +29,7 @@ class _ResponseState extends State<Response> {
               left: MediaQuery.of(context).size.width * 0.10,
             ),
             child: TextField(
+               inputFormatters: [BlacklistingTextInputFormatter(new RegExp('\n'))],
               controller: newController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),

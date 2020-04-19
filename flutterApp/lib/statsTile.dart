@@ -60,6 +60,12 @@ class StatsTileState extends State<StatsTile> {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return Container(
+          decoration: BoxDecoration(
+            color: Colors.blueGrey[900],
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+            ),
+          ),
           child: Center(
             child: Column(
               children: <Widget>[
@@ -95,36 +101,57 @@ class StatsTileState extends State<StatsTile> {
                   backgroundColor: Colors.transparent,
                   progressColor: Colors.blue,
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    MediaQuery.of(context).size.width * .033,
-                    0,
-                    0,
-                    0,
-                  ),
-                  child: Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.info_outline,
-                          size: 16,
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.info_outline,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "This number represents the forms' overall score",
+                        style: TextStyle(
                           color: Colors.white,
+                          fontSize: 10,
                         ),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.01),
-                        Expanded(
-                          child: Text(
-                            "This number represents the forms' overall score",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
+                //original code below
+
+                // Padding(
+                //   padding: EdgeInsets.fromLTRB(
+                //     MediaQuery.of(context).size.width * .033,
+                //     0,
+                //     0,
+                //     0,
+                //   ),
+                //   child: Expanded(
+                //     child: Row(
+                //       children: <Widget>[
+                //         Icon(
+                //           Icons.info_outline,
+                //           size: 16,
+                //           color: Colors.white,
+                //         ),
+                //         SizedBox(
+                //             width: MediaQuery.of(context).size.width * 0.01),
+                //         Expanded(
+                //           child: Text(
+                //             "This number represents the forms' overall score",
+                //             style: TextStyle(
+                //               color: Colors.white,
+                //               fontSize: 10,
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -141,41 +168,46 @@ class StatsTileState extends State<StatsTile> {
 //////////////////////////////////////////////
 
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blueGrey[900],
-        borderRadius: BorderRadius.all(
-          Radius.circular(20.0),
-        ),
-      ),
-      padding: const EdgeInsets.all(8),
-
-      //child: fetchStatz,
-      child: Column(
-        children: <Widget>[
-          fetchStatz,
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //   children: <Widget>[
-          //     Icon(
-          //       Icons.info_outline,
-          //       size: 16,
-          //       color: Colors.white,
-          //     ),
-          //     SizedBox(width: MediaQuery.of(context).size.width * 0.01   ),
-          //     Expanded(
-          //                     child: Text(
-          //         "This number represents the forms' overall score",
-          //         style: TextStyle(
-          //           color: Colors.white,
-          //           fontSize: 12,
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-        ],
-      ),
-    );
+    return fetchStatz;
   }
+//Below is the original code
+
+  // Widget build(BuildContext context) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       color: Colors.blueGrey[900],
+  //       borderRadius: BorderRadius.all(
+  //         Radius.circular(20.0),
+  //       ),
+  //     ),
+  //     padding: const EdgeInsets.all(8),
+
+  //     //child: fetchStatz,
+  //     child: Column(
+  //       children: <Widget>[
+  //         fetchStatz,
+  //         // Row(
+  //         //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         //   children: <Widget>[
+  //         //     Icon(
+  //         //       Icons.info_outline,
+  //         //       size: 16,
+  //         //       color: Colors.white,
+  //         //     ),
+  //         //     SizedBox(width: MediaQuery.of(context).size.width * 0.01   ),
+  //         //     Expanded(
+  //         //                     child: Text(
+  //         //         "This number represents the forms' overall score",
+  //         //         style: TextStyle(
+  //         //           color: Colors.white,
+  //         //           fontSize: 12,
+  //         //         ),
+  //         //       ),
+  //         //     ),
+  //         //   ],
+  //         // ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

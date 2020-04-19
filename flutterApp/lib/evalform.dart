@@ -9,6 +9,11 @@ import 'package:http/http.dart' as http;
 //with two entry fields
 //email and weight
 
+//updated regular expression in validator of add
+//now only gets up to two decimal places
+//still need to find away to limit the front number to just 1 or 0
+//updated: 4/18/2020
+
 class EvalCustomForm extends StatefulWidget {
   @override
   EvalCustomFormState createState() {
@@ -124,7 +129,7 @@ class EvalCustomFormState extends State<EvalCustomForm> {
                 if (value.isEmpty) {
                   return 'Error Code 0003: empty weight field';
                 }
-                if (!value.contains(new RegExp(r'^[0-9]*.?[0-9]$'))) {
+                if (!value.contains(new RegExp(r'^[+]?[0-9]*\.?[0-9]{0,2}$'))) {
                   return 'weight must be a number';
                 }
                 _evalWeight = value;

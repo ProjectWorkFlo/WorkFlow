@@ -33,6 +33,7 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_flip_view: ^1.0.3
   flip_panel: ^1.0.1
+  rflutter_alert: ^1.0.3
 
 
   
