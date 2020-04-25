@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'eval.dart';
 
-//still not fully functioning 3/29/20
-
 class EvalEdit extends StatefulWidget {
   @override
   EvalEditState createState() {
@@ -67,151 +65,163 @@ class EvalEditState extends State<EvalEdit> {
         future: evaluatorsList(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return new Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text(
-                        '${snapshot.data[index].firstName} ${snapshot.data[index].lastName}      ${snapshot.data[index].email}'),
-                    trailing: Icon(Icons.arrow_right),
-                    onTap: () {
-                      //place edit code in here
-                      SimpleDialog box = SimpleDialog(
-                        title: Text(
-                          'Change ${snapshot.data[index].firstName}' +
-                              '\'s' +
-                              ' Information',
-                          textAlign: TextAlign.center,
-                        ),
-                        children: <Widget>[
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextFormField(
-                                decoration: const InputDecoration(
-                                  icon: Icon(
-                                    Icons.person_add,
-                                    color: Colors.yellow,
-                                  ),
-                                ),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                                initialValue:
-                                    '${snapshot.data[index].firstName}',
-                                onChanged: (String first) {
-                                  snapshot.data[index].firstName = first;
-                                },
-                              ),
+            return Scrollbar(
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return new Card(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: Colors.yellow,
+                      ),
+                      title: Text(
+                          '${snapshot.data[index].firstName} ${snapshot.data[index].lastName}      ${snapshot.data[index].email}'),
+                      trailing: Icon(
+                        Icons.arrow_right,
+                        color: Colors.yellow,
+                      ),
+                      onTap: () {
+                        //place edit code in here
+                        SimpleDialog box = SimpleDialog(
+                          title: Text(
+                            'Change ${snapshot.data[index].firstName}' +
+                                '\'s' +
+                                ' Information',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.yellow,
                             ),
                           ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextFormField(
-                                decoration: const InputDecoration(
-                                  icon: Icon(
-                                    Icons.person_add,
-                                    color: Colors.yellow,
+                          children: <Widget>[
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(
+                                      Icons.person_add,
+                                      color: Colors.yellow,
+                                    ),
                                   ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  initialValue:
+                                      '${snapshot.data[index].firstName}',
+                                  onChanged: (String first) {
+                                    snapshot.data[index].firstName = first;
+                                  },
                                 ),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                                initialValue:
-                                    '${snapshot.data[index].lastName}',
-                                onChanged: (String last) {
-                                  snapshot.data[index].lastName = last;
-                                },
                               ),
                             ),
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextFormField(
-                                decoration: const InputDecoration(
-                                  icon: Icon(
-                                    Icons.email,
-                                    color: Colors.yellow,
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(
+                                      Icons.person_add,
+                                      color: Colors.yellow,
+                                    ),
                                   ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  initialValue:
+                                      '${snapshot.data[index].lastName}',
+                                  onChanged: (String last) {
+                                    snapshot.data[index].lastName = last;
+                                  },
                                 ),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                                initialValue: '${snapshot.data[index].email}',
-                                onChanged: (String mail) {
-                                  snapshot.data[index].email = mail;
-                                },
                               ),
                             ),
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextFormField(
-                                decoration: const InputDecoration(
-                                  icon: Icon(
-                                    Icons.score,
-                                    color: Colors.yellow,
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(
+                                      Icons.email,
+                                      color: Colors.yellow,
+                                    ),
                                   ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  initialValue: '${snapshot.data[index].email}',
+                                  onChanged: (String mail) {
+                                    snapshot.data[index].email = mail;
+                                  },
                                 ),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                                initialValue: '${snapshot.data[index].weight}',
-                                onChanged: (String weight) {
-                                  snapshot.data[index].weight = weight;
-                                },
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .20,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 80, right: 80),
-                              child: RaisedButton(
-                                onPressed: () async {
-                                  //edits saved and pushed to the database here
-                                  print(keys.elementAt(index));
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(
+                                      Icons.score,
+                                      color: Colors.yellow,
+                                    ),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  initialValue:
+                                      '${snapshot.data[index].weight}',
+                                  onChanged: (String weight) {
+                                    snapshot.data[index].weight = weight;
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .20,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 80, right: 80),
+                                child: RaisedButton(
+                                  onPressed: () async {
+                                    //edits saved and pushed to the database here
+                                    print(keys.elementAt(index));
 
-                                  await editEvaluator(
-                                      keys.elementAt(index),
-                                      snapshot.data[index].email,
-                                      snapshot.data[index].firstName,
-                                      snapshot.data[index].lastName,
-                                      snapshot.data[index].weight);
-                                  //pops the dialog box
-                                  Navigator.pop(context);
-                                },
-                                child: Text('Submit',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    )),
-                                color: Colors.yellow,
+                                    await editEvaluator(
+                                        keys.elementAt(index),
+                                        snapshot.data[index].email,
+                                        snapshot.data[index].firstName,
+                                        snapshot.data[index].lastName,
+                                        snapshot.data[index].weight);
+                                    //pops the dialog box
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Submit',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                      )),
+                                  color: Colors.yellow,
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      );
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return box;
-                        },
-                      );
-                    },
-                  ),
-                );
-              },
+                            )
+                          ],
+                        );
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return box;
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return Text(

@@ -52,6 +52,7 @@ class EvalTileState extends State<EvalTile> {
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: evalAdd,
                   leading: Icon(
                     Icons.person, color: Colors.green,
@@ -75,6 +76,7 @@ class EvalTileState extends State<EvalTile> {
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: evalRemove, //add remove functionality here
                   leading: Icon(
                     Icons.supervisor_account, color: Colors.red,
@@ -98,6 +100,7 @@ class EvalTileState extends State<EvalTile> {
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: evalEdit, //add edit functionality here
                   leading: Icon(
                     Icons.person, color: Colors.yellow,
@@ -128,6 +131,7 @@ class EvalTileState extends State<EvalTile> {
       title: Text(
         "Add Evaluator",
         textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.green,),
       ),
       children: <Widget>[EvalCustomForm()],
     );
@@ -145,7 +149,8 @@ class EvalTileState extends State<EvalTile> {
       title: Text(
         "Remove Evaluator",
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(color: Colors.red,),
+       // style: TextStyle(fontWeight: FontWeight.bold),
       ),
       children: <Widget>[
         EvalRmv(), //add eval widget data in here
@@ -166,6 +171,7 @@ class EvalTileState extends State<EvalTile> {
       title: Text(
         "Edit Evaluator",
         textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.yellow,),
       ),
       children: <Widget>[
         EvalEdit(),

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutterApp/statsTile.dart';
@@ -24,10 +23,29 @@ class _DashboardState extends State<Dashboard> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blueGrey[900],
         centerTitle: true,
-        title: Text('StartUpNV Dashboard',
-            style: TextStyle(
-              fontSize: 32,
-            )),
+        title: Text(
+          'StartUpNV Dashboard',
+          style: TextStyle(
+            fontSize: 32,
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            hoverColor: Colors.blueGrey[700],
+            shape: BeveledRectangleBorder(),
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            }, //needs to be able to log the person out
+            child: Text(
+              'Log Out',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+              ),
+            ),
+            color: Colors.blueGrey[900],
+          )
+        ],
       ),
       body: Center(
         child: Container(

@@ -3,34 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutterApp/EvaluatorPG.dart';
+import 'package:flutterApp/passwordRecover.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutterApp/passwordRecover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterApp/mahoganyDashboard.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:async';
 
-bool alertHasShown = false; 
+bool alertHasShown = false;
 
 var alertStyle = AlertStyle(
-      animationType: AnimationType.fromBottom,
-      isCloseButton: false,
-      isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontWeight: FontWeight.bold),
-      animationDuration: Duration(milliseconds: 400),
-      alertBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        side: BorderSide(
-          color: Colors.red,
-        ),
-      ),
-      titleStyle: TextStyle(
-        color: Colors.red,
-      ),
-    );
-
-
+  animationType: AnimationType.fromBottom,
+  isCloseButton: false,
+  isOverlayTapDismiss: false,
+  descStyle: TextStyle(fontWeight: FontWeight.bold),
+  animationDuration: Duration(milliseconds: 400),
+  alertBorder: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(30.0),
+    side: BorderSide(
+      color: Colors.red,
+    ),
+  ),
+  titleStyle: TextStyle(
+    color: Colors.red,
+  ),
+);
 
 class LoginPage extends StatelessWidget {
   @override
@@ -103,7 +101,6 @@ class LoginFormState extends State<LoginForm> {
                 new MyImageWidget(),
 
                 TextFormField(
-                  
                   autocorrect: false,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -134,7 +131,6 @@ class LoginFormState extends State<LoginForm> {
                   padding: EdgeInsets.only(bottom: 25.0),
                   child: TextFormField(
                     onFieldSubmitted: (value) {
-                     
                       onPressed();
                     },
 
@@ -209,28 +205,28 @@ class LoginFormState extends State<LoginForm> {
             MaterialPageRoute(builder: (context) => Dashboard()),
           );
         } else {
-          if(alertHasShown == false){
-            alertHasShown = true; 
-          Alert(
-            context: context,
-            style: alertStyle,
-            type: AlertType.error,
-            title: "HUH?",
-            desc: "we can't find you",
-            buttons: [
-              DialogButton(
-                child: Text(
-                  "Okay",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-               onPressed: () { Navigator.pop(context);
-               alertHasShown = false;
-               },
-                width: 120,
-              )
-            ],
-          ).show();
-          
+          if (alertHasShown == false) {
+            alertHasShown = true;
+            Alert(
+              context: context,
+              style: alertStyle,
+              type: AlertType.error,
+              title: "HUH?",
+              desc: "we can't find you",
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "Okay",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    alertHasShown = false;
+                  },
+                  width: 120,
+                )
+              ],
+            ).show();
           }
 
           // Timer(Duration(seconds: 3), () {

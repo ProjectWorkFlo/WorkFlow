@@ -51,15 +51,16 @@ class DeliverableTileState extends State<DeliverableTile> {
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: startUpWindow,
                   leading: Icon(
                     Icons.mail, color: Colors.blue,
                   ),
                   title: Text(
-                    'Invite Evaluator', style: TextStyle(color: Colors.white,),
+                    'View Startup Report', style: TextStyle(color: Colors.white,),
                   ),
                   subtitle: Text(
-                    'Send invitation to evaluators', style: TextStyle(color: Colors.white,),
+                    'View the report of a choosen startup', style: TextStyle(color: Colors.white,),
                   ),
                   trailing: Icon(
                     Icons.forward, color: Colors.blue,

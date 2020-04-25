@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'eval.dart';
 import 'package:http/http.dart' as http;
@@ -62,21 +61,32 @@ class EvalRmvState extends State<EvalRmv> {
         future: evaluatorsList(keysFromMap),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return new Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text(
-                        '${snapshot.data[index].firstName} ${snapshot.data[index].lastName}      ${snapshot.data[index].email}'),
-                    trailing: Icon(Icons.arrow_right),
-                    onTap: () async {
-                      confirmationPopUp(keysFromMap.elementAt(index), snapshot.data[index].firstName, snapshot.data[index].lastName);
-                    },
-                  ),
-                );
-              },
+            return Scrollbar(
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return new Card(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: Colors.red,
+                      ),
+                      title: Text(
+                          '${snapshot.data[index].firstName} ${snapshot.data[index].lastName}      ${snapshot.data[index].email}'),
+                      trailing: Icon(
+                        Icons.arrow_right,
+                        color: Colors.red,
+                      ),
+                      onTap: () async {
+                        confirmationPopUp(
+                            keysFromMap.elementAt(index),
+                            snapshot.data[index].firstName,
+                            snapshot.data[index].lastName);
+                      },
+                    ),
+                  );
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return Text(
@@ -104,7 +114,9 @@ class EvalRmvState extends State<EvalRmv> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       children: <Widget>[
-        Center(child: Text('Are you sure you want to delete $firstName $lastName?')),
+        Center(
+            child:
+                Text('Are you sure you want to delete $firstName $lastName?')),
         Row(children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 120.0, top: 10),
@@ -142,4 +154,3 @@ class EvalRmvState extends State<EvalRmv> {
     );
   }
 }
-

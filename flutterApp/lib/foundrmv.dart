@@ -46,21 +46,23 @@ class FounderRemoveState extends State<FounderRemove> {
         future: fetchedFounder(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return new Card(
-                  child: ListTile(
-                    leading: Icon(Icons.business),
-                    title: Text('${snapshot.data[index].foundry}'),
-                    trailing: Icon(Icons.arrow_right),
-                    onTap: () {
-                      confirmationPopUp(
-                          keys.elementAt(index), snapshot.data[index].foundry);
-                    },
-                  ),
-                );
-              },
+            return Scrollbar(
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return new Card(
+                    child: ListTile(
+                      leading: Icon(Icons.business, color: Colors.red,),
+                      title: Text('${snapshot.data[index].foundry}',),
+                      trailing: Icon(Icons.arrow_right, color: Colors.red,),
+                      onTap: () {
+                        confirmationPopUp(
+                            keys.elementAt(index), snapshot.data[index].foundry);
+                      },
+                    ),
+                  );
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return Text(
