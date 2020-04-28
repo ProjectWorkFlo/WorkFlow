@@ -4,9 +4,6 @@ import 'eval.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 //Debugging v for the problems (v indicates down)
-//import 'package:firebase_database/firebase_database.dart';
-
-//add in a warning bax before the deletion of the evaluator 3/29/20
 
 class EvalRmv extends StatefulWidget {
   @override

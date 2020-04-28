@@ -26,10 +26,14 @@ class _QuestionaireState extends State<Questionaire> {
   }
 }
 
+String nameDropDown;
+String companyDropDown;
+
 Map map = {
   'pitchName': 'Pitch Name',
-  'firstName': 'First Name',
-  'lastName': 'Last Name',
+  //'firstName': 'First Name',
+  //'lastName': 'Last Name',
+  'evaluatorName': 'FirstLast',
   'email': 'Email',
   'productKnowledge': '(Optional) Product Knowledge: Empty',
   'productFeasability': '(Optional) Product Feasability: Empty',
@@ -47,7 +51,7 @@ Map map = {
   'internalFeedback': '(Optional) Internal Feedback: Empty',
   'storedValues': new List(12),
   'dayOfWeek': 'Day of the week',
-  'month' : 'month',
+  'month': 'month',
 };
 
 final List<int> recordedValues = new List(12);
@@ -86,8 +90,9 @@ class MyHomePage extends StatelessWidget {
         body: json.encode(
           {
             'pitchName': map['pitchName'],
-            'firstName': map['firstName'],
-            'lastName': map['lastName'],
+//            'firstName': map['firstName'],
+//            'lastName': map['lastName'],
+            'evaluatorName': map['evaluatorName'],
             'email': map['email'],
             'productKnowledge': map['productKnowledge'],
             'productFeasability': map['productFeasability'],
@@ -105,7 +110,7 @@ class MyHomePage extends StatelessWidget {
             'internalFeedback': map['internalFeedback'],
             'storedValues': map['storedValues'],
             'dayOfWeek': map['dayOfWeek'],
-            'month' : map['month'],
+            'month': map['month'],
           },
         ),
       );
@@ -483,6 +488,8 @@ class MyHomePage extends StatelessWidget {
                       map['internalFeedback'] = internalFeedbackController.text;
                       map['dayOfWeek'] = DateFormat('EEEE').format(date);
                       map['month'] = DateFormat('MMMM').format(date);
+                      map['evaluatorName'] = nameDropDown;
+                      map['pitchName'] = companyDropDown;
 
                       // Nick Function here
                       addAssessment();
@@ -490,9 +497,20 @@ class MyHomePage extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            // Retrieve the text the that user has entered by using the controller
-                            content: Text(
-                                "Successfully recorded values!" + map['pitchName'] +
+                              // Retrieve the text the that user has entered by using the controller
+                              content: 
+                              /*Text((() {
+                            if (map['productKnowledge'] != null) {
+                              return "product knowledge isn't empty";
+                            }
+                            if (map['productFeasability'] != null) {
+                              return "product feasability isn't empty";
+                            }
+                            return "neither are occupied";
+                          })())*/
+                              
+                              Text(
+                                "$nameDropDown, Thank you for evaluating $companyDropDown!"  +
                                 '\n' +
                                 map['dayOfWeek'] + 
                                 '\n' +
@@ -525,8 +543,8 @@ class MyHomePage extends StatelessWidget {
                                 map['feedbackForFounder'] +
                                 '\n' +
                                 map['internalFeedback']
-                                ), // +
-                          );
+                                ),
+                              );
                         },
                       );
                     }

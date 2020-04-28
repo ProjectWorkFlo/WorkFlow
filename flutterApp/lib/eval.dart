@@ -1,5 +1,3 @@
-//import 'package:flutter/material.dart';
-
 class Eval
 {
   String firstName;
@@ -21,4 +19,3 @@ class Eval
     );
   }
 }
-

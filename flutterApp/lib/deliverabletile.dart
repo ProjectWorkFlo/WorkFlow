@@ -4,8 +4,6 @@
 //      different operations. The operations are as follows: invite and send PDF
 
 import 'package:flutter/material.dart';
-//import 'questionaire.dart';
-//import 'menuWidgets.dart';
 import 'choosefounder.dart';
 
 class DeliverableTile extends StatefulWidget {
@@ -69,32 +67,40 @@ class DeliverableTileState extends State<DeliverableTile> {
               ),
             ),
           ),
-
-          //PDFMaker(),
-          // Flexible(child: Card(
-          //   child: ListTile(
-          //     onTap: () {}, //add edit functionality here
-          //     leading: Icon(Icons.supervisor_account,),
-          //     title: Text('Edit Founder',),
-          //     subtitle: Text('Change founder information',),
-          //     trailing: Icon(Icons.mode_edit,),
-          //     ),
-          //     ),
-          //     ),
         ],
       ),
     );
   }
 
   void startUpWindow() {
-    //Duration ticks = new Duration(seconds: 5);
-
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Choose StartUp",
-        textAlign: TextAlign.center,
-      ),
       children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Choose StartUp",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 20,
+            ),
+          ),
+        ),
         ChooseFounder(),
       ],
     );
@@ -103,8 +109,5 @@ class DeliverableTileState extends State<DeliverableTile> {
         builder: (BuildContext context) {
           return box;
         });
-
-    //this works for now but might need to find a different way to pop the window
-    //Timer(ticks, () {Navigator.of(context).pop();});
   }
 }

@@ -153,14 +153,33 @@ class FounderTileState extends State<FounderTile> {
   //          of the founder. This data is stored in Google FireBase
   void founderAdd() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Add Founder",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.green,
-        ),
-      ),
       children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Add Founder",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 20,
+            ),
+          ),
+        ),
         FounderCustomForm(),
       ],
     );
@@ -176,14 +195,35 @@ class FounderTileState extends State<FounderTile> {
   //          removes the choosen founder from the database in Google FireBase
   void removeFounder() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Remove Founder",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.red,
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
-      ),
-      children: <Widget>[FounderRemove()],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Remove Founder",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        FounderRemove(),
+      ],
     );
     showDialog(
       context: context,
@@ -197,14 +237,35 @@ class FounderTileState extends State<FounderTile> {
   //          brings up a dialog box with prefilled data that can be edited, changes are pushed up to the database
   void editFounder() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Edit Founder",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.yellow,
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
-      ),
-      children: <Widget>[FounderEdit()],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Edit Founder",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.yellow,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        FounderEdit(),
+      ],
     );
     showDialog(
       context: context,

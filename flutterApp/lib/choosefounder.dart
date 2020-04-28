@@ -47,9 +47,9 @@ class ChooseFounderState extends State<ChooseFounder>
               itemBuilder: (context, index) {
                 return new Card(
                   child: ListTile(
-                    leading: Icon(Icons.business),
+                    leading: Icon(Icons.business, color: Colors.blue,),
                     title: Text('${snapshot.data[index].foundry}'),
-                    trailing: Icon(Icons.arrow_right),
+                    trailing: Icon(Icons.arrow_right, color: Colors.blue,),
                     onTap: () {
                                             print('${snapshot.data[index].foundry}');
                       Navigator.push(context, MaterialPageRoute(builder: (context) => WebpageReport('${snapshot.data[index].foundry}'),),);

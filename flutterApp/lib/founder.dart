@@ -1,6 +1,3 @@
-//still debugging
-//import 'package:flutter/material.dart';
-
 class Founder {
   String key;
   String foundry;

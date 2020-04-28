@@ -92,8 +92,9 @@ class WebpageReport extends StatelessWidget {
     for (var v in valuesFromMap) {
       if (v['pitchName'] == pitchName) {
         StartUpData test = StartUpData(
-            firstName: v['firstName'],
-            lastName: v['lastName'],
+            //firstName: v['firstName'],
+            //lastName: v['lastName'],
+            name: v['evaluatorName'], //changed on 4/27/2020
             email: v['email'],
             startUpName: v['pitchName'],
             vals: v['storedValues']);
@@ -107,8 +108,10 @@ class WebpageReport extends StatelessWidget {
     //email 4/23/2020
     for (var e in valuesFromMap2) {
       for (var d in dataList) {
-        if (d.firstName == e['firstName'] && d.lastName == e['lastName']) {
+        if (d.name == e['firstName'] + ' ' + e['lastName']) {
           d.weight = double.parse(e['weight']);
+          print(d.weight);
+          print(d.name);
         }
       }
     }
