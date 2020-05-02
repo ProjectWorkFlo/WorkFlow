@@ -449,20 +449,20 @@ class MyHomePage extends StatelessWidget {
                 maxLines: null,
                 textAlign: TextAlign.center,
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: RaisedButton(
-                  onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WebpageReport(),
-                      ),
-                    );
-                  },
-                  child: Text('Generate Report'),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomRight,
+              //   child: RaisedButton(
+              //     onPressed: () async {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => WebpageReport(),
+              //         ),
+              //       );
+              //     },
+              //     child: Text('Generate Report'),
+              //   ),
+              // ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: RaisedButton(
