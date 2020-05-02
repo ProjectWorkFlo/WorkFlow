@@ -4,25 +4,31 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'webpageReport.dart';
 
-class ChooseFounder extends StatefulWidget
-{
+//ChooseFounder is used by delverabletile.dart in order to generate the
+//list of founders when the button is pressed on the deliverable tile.
+//The founder information is gathered using the http request call to
+//the Google Firebase. A future builder is used to get that information
+//returned.
+
+class ChooseFounder extends StatefulWidget {
   @override
-  ChooseFounderState createState()
-  {
+  ChooseFounderState createState() {
     return ChooseFounderState();
   }
 }
 
-class ChooseFounderState extends State<ChooseFounder>
-{
-  //fetches the data from the database
+class ChooseFounderState extends State<ChooseFounder> {
+  //fetches the founder data from the Goolge Firebase database.
+  //This is done using the http request get and the results are saved to 
+  //a list of the type Founder. Future builder will call this function and
+  //use it to form the list of founders that will be displayed when the 
+  //view report button is pressed.
   Future<List<Founder>> fetchedFounder() async {
     const url = 'https://projectworkflow.firebaseio.com/Founder.json';
     final response = await http.get(url);
     Map<String, dynamic> fetchedEvaluatorsList = json.decode(response.body);
     dynamic valuesFromMap = fetchedEvaluatorsList.values;
     List<Founder> founderList = new List();
-    //keys = fetchedEvaluatorsList.keys;
 
     for (var v in valuesFromMap) {
       Founder found = Founder(foundry: v['foundry']);
@@ -31,9 +37,8 @@ class ChooseFounderState extends State<ChooseFounder>
     return founderList;
   }
 
-  @override 
-  Widget build(BuildContext context)
-  {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * .40,
       width: MediaQuery.of(context).size.width * .25,
@@ -47,12 +52,25 @@ class ChooseFounderState extends State<ChooseFounder>
               itemBuilder: (context, index) {
                 return new Card(
                   child: ListTile(
-                    leading: Icon(Icons.business, color: Colors.blue,),
-                    title: Text('${snapshot.data[index].foundry}'),
-                    trailing: Icon(Icons.arrow_right, color: Colors.blue,),
+                    leading: Icon(
+                      Icons.business,
+                      color: Colors.blue,
+                    ),
+                    title: Text(
+                      '${snapshot.data[index].foundry}',
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_right,
+                      color: Colors.blue,
+                    ),
                     onTap: () {
-                                            print('${snapshot.data[index].foundry}');
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => WebpageReport('${snapshot.data[index].foundry}'),),);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              WebpageReport('${snapshot.data[index].foundry}'),
+                        ),
+                      );
                     },
                   ),
                 );

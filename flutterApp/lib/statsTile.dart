@@ -8,32 +8,36 @@ import 'dart:async';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+//create a class to hold form scores
 class Statistics {
   int avgFormScores = 0;
 
+//simple constructor
   Statistics({this.avgFormScores});
-
+//more advanced constructor that pulls necessary values out labelled as "storeValues"
   factory Statistics.setScroes(dynamic mapForFormCount, int index) {
     return Statistics(
       avgFormScores: mapForFormCount['storedValues'][index],
     );
   }
 }
-
+//this is so we can work with information/items/values before we have them. 
 Future<double> fetchStats() async {
+  //fetch json result from our database
   const formURL = 'https://projectworkflow.firebaseio.com/Assessments.json';
-
   final formJsonResponse = await http.get(formURL);
 
+//using above constructor, we extract the data we want out of the json result above. 
   Map<String, dynamic> mapOfFetchedForms = json.decode(formJsonResponse.body);
 
+//in the result, we know which value we want so we use a necessary index to get to that position. 
   int overallScoreIndex = 11;
   int tempInt = 0;
 
+//we only care about the values and not the keys of the map. 
   dynamic valuesOfMapOfFetchedForms = mapOfFetchedForms.values;
 
-  print(valuesOfMapOfFetchedForms);
-
+//run through all values and get average and the return it to be used later. 
   for (var temp in valuesOfMapOfFetchedForms) {
     Statistics overallScoreHolder =
         new Statistics.setScroes(temp, overallScoreIndex);
@@ -45,9 +49,11 @@ Future<double> fetchStats() async {
   return (tempInt / mapOfFetchedForms.length);
 }
 
+//create new class that is stateful 
 class StatsTile extends StatefulWidget {
   @override
   StatsTileState createState() {
+    //here we call our implementation that will eventually be built using build widget. Implementation is below (statstilestate)
     return StatsTileState();
   }
 }
@@ -55,10 +61,14 @@ class StatsTile extends StatefulWidget {
 class StatsTileState extends State<StatsTile> {
   // @override
 
+//here is where we work with the thing that is called during runtime. Here we can mess with our average num of overall scores. 
   Widget fetchStatz = FutureBuilder<double>(
+    //call our important function that returns the average number of overall scores
     future: fetchStats(),
     builder: (context, snapshot) {
+    //check to see if fetchstats has data . 
       if (snapshot.hasData) {
+        //in a container, we design what the title, arch, average number, spacing and footer will be. 
         return Container(
 
           decoration: BoxDecoration(
@@ -71,6 +81,8 @@ class StatsTileState extends State<StatsTile> {
           child: Center(
             child: Column(
               children: <Widget>[
+
+                //this widget is called thorugh a library
                 CircularPercentIndicator(
                   header: AutoSizeText(
                     'Overall Rating Given',
@@ -136,6 +148,7 @@ class StatsTileState extends State<StatsTile> {
             ),
           ),
         );
+        //if snapshot data has some error, display predefined error. 
       } else if (snapshot.hasError) {
         return new Text("${snapshot.error}");
       }
@@ -146,7 +159,7 @@ class StatsTileState extends State<StatsTile> {
   );
 
 //////////////////////////////////////////////
-
+//build our hardwork so that it can be displayed
   Widget build(BuildContext context) {
     return fetchStatz;
   }

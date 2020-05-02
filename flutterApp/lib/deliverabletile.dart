@@ -1,8 +1,12 @@
 //Created on: 3/18/2020
 //class DeliverableTile:
 //      Container, for the deliverables, that has interactable cards
-//      different operations. The operations are as follows: invite and send PDF
-
+//      different operations. The operations are as follows: view the 
+//      startup report.
+//      The main purpose of this class is to create the tile and button
+//      for the deliverables of the project. This would be the view report
+//      button. This calls the startUpWindow function to create a pop up
+//      with the founders that are available in the database.
 import 'package:flutter/material.dart';
 import 'choosefounder.dart';
 
@@ -72,6 +76,9 @@ class DeliverableTileState extends State<DeliverableTile> {
     );
   }
 
+  //startUpWindow function is used to call the ChooseFounder class
+  //in order to create the card list of the available founders. It uses
+  //a simple dialog widget to create the pop up the user sees on screen.
   void startUpWindow() {
     SimpleDialog box = SimpleDialog(
       children: <Widget>[

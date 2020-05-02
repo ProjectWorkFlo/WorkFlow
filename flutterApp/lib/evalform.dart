@@ -28,6 +28,11 @@ class EvalCustomFormState extends State<EvalCustomForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    //addEvaluator function uses a http request post call to add the 
+    //given evaluator information into the Google Firebase database.
+    //the function is called when the submit button from the add evaluator 
+    //pop up is pressed.
     Future<void> addEvaluator() {
       const url = 'https://projectworkflow.firebaseio.com/Evaluators.json';
       return http.post(
@@ -60,6 +65,9 @@ class EvalCustomFormState extends State<EvalCustomForm> {
               ),
               //need to add an if statement to check if the email is already in the
               //database
+              //the validator here will check if the field is empty and that the name
+              //has a proper form.
+              //the regular expression used here was created with the help of https://regexr.com/
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Name field cannot be empty';
@@ -85,6 +93,9 @@ class EvalCustomFormState extends State<EvalCustomForm> {
                   hintText: 'Last Name'),
               //need to add an if statement to check if the email is already in the
               //database
+              //the validator here will check if the field is empty and that the name
+              //has a proper form.
+              //the regular expression used here was created with the help of https://regexr.com/
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Name field cannot be empty';
@@ -110,6 +121,8 @@ class EvalCustomFormState extends State<EvalCustomForm> {
                   hintText: 'Email'),
               //need to add an if statement to check if the email is already in the
               //database
+              //the validator here will check if the field is empty and that the name
+              //has a proper form.              
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Email field cannot be empty';

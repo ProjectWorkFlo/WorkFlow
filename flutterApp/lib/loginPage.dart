@@ -2,8 +2,7 @@ import 'package:flutterApp/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutterApp/EvaluatorPG.dart';
-import 'package:flutterApp/passwordRecover.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +10,9 @@ import 'package:flutterApp/mahoganyDashboard.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:async';
 
-bool alertHasShown = false;
+bool alertHasShown = false; // used in pop up for wrong credentials but correct syntax
 
+// Change the look of default alert pop up 
 var alertStyle = AlertStyle(
   animationType: AnimationType.fromBottom,
   isCloseButton: false,
@@ -30,20 +30,24 @@ var alertStyle = AlertStyle(
   ),
 );
 
+//declare loginpage class and make it stateless
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //scaffold is the overall structure of the webpage
     return Scaffold(
       backgroundColor: Colors.grey[350],
+      //appbar is the top header of webpage
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900],
         title: const Text('Welcome', style: TextStyle(fontSize: 32)),
       ),
+      //loginform is a called widget that is implemented below
       body: LoginForm(),
     );
   }
 }
-
+ //initiate loginform class and have it be stateful so it can change when needed. 
 class LoginForm extends StatefulWidget {
   @override
   LoginFormState createState() {
@@ -52,11 +56,16 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
+  //future means that there will some future event/value/item that will be available later
   Future<bool> fetchCredentials() async {
     bool flag = false;
+    //This URL is linked to our database and is in json format. 
     const url = 'https://projectworkflow.firebaseio.com/credentials.json';
+    //wait until we can extract the contents if you were to click on above link. 
     final response = await http.get(url);
+    //From the response, we transform the json format into map (key/value pair)
     Map<String, dynamic> verify = json.decode(response.body);
+    //perform some simple validation
     if (verify['Username'] == _email) {
       flag = true;
     } else {
@@ -69,7 +78,7 @@ class LoginFormState extends State<LoginForm> {
     }
     return flag;
   }
-
+//declare variables here
   String name;
   String pass;
   final alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
@@ -77,19 +86,22 @@ class LoginFormState extends State<LoginForm> {
   var _email, _password;
 
   @override
+  //THis wdiget will build our implementation and can adjust to live events such as new screen size, button taps, etc. 
   Widget build(BuildContext context) {
+    //grab the screensize of current screen
     var screenSize = MediaQuery.of(context).size;
-
+    //return the form and its contents to be built. 
     return Form(
       key: _formKey,
+      //create box inwhich you can scroll if needed. 
       child: SingleChildScrollView(
+        
         child: Stack(children: <Widget>[
-          Container(
-              //child:
-              ),
+          // Container(
+          //     //child:
+          //     ),
           Center(
-            //instead of hardcode 175, container can be infinity length but the widgets within can be centered to be center of the container.
-            //or use media query class
+           //center following contents and place them in a column within a container that abide to screen size. 
             child: Container(
               padding: EdgeInsets.fromLTRB(
                   screenSize.width * 0.40,
@@ -97,9 +109,9 @@ class LoginFormState extends State<LoginForm> {
                   screenSize.width * 0.40,
                   screenSize.width * 0.10),
               child: Column(children: <Widget>[
-//////////////////////////////////////Text Fields
+                // This calls a wdiget that simply holds an image of my choice (StartupNVs Logo)
                 new MyImageWidget(),
-
+                //Create textform field for email with simple validation
                 TextFormField(
                   autocorrect: false,
                   decoration: InputDecoration(
@@ -123,10 +135,12 @@ class LoginFormState extends State<LoginForm> {
                       return ('Please type in a valid email address');
                     }
                     _email = value;
-                    //Added this to get rid of the problem (PLEASE DELETE IF IT CAUSES AN ISSUE!)
+
+                    
                     return null;
                   },
                 ),
+                //create space between email and password textfields
                 Padding(
                   padding: EdgeInsets.only(bottom: 25.0),
                   child: TextFormField(
@@ -155,7 +169,7 @@ class LoginFormState extends State<LoginForm> {
                         return ('Password is invalid.');
                       }
                       _password = value;
-                      //Added this to get rid of the problem (PLEASE DELETE IF IT CAUSES AN ISSUE!)
+                      
                       return null;
                     },
                   ),
@@ -167,23 +181,7 @@ class LoginFormState extends State<LoginForm> {
                   onPressed: onPressed,
                   child: Text('LOG IN'),
                 ),
-                // ForgotPasswordPopup(),
-////////////////////////////
-                // RaisedButton(
-                //   onPressed: () {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => Dashboard()));
-                //   },
-                //   child: Text('Dashboard'),
-                // ),
-                // RaisedButton(
-                //   onPressed: () {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => FirstRoute()));
-                //   },
-                //   child: Text('Original next Page'),
-                // ),
-/////////////////////////////
+
               ]),
             ),
           ),
@@ -192,6 +190,7 @@ class LoginFormState extends State<LoginForm> {
     );
   }
 
+  //called when user clicks "login"
   void onPressed() {
     var form = _formKey.currentState;
 
@@ -201,10 +200,11 @@ class LoginFormState extends State<LoginForm> {
         if (await fetchCredentials() == true) {
           Navigator.push(
             context,
-            //MaterialPageRoute(builder: (context) => FirstRoute()),
+            //THis snip of code will navigate user to new page based on successful validation of credentials
             MaterialPageRoute(builder: (context) => Dashboard()),
           );
         } else {
+          //upon wrong credentials, ccreate popup that tells user they dont exist
           if (alertHasShown == false) {
             alertHasShown = true;
             Alert(
@@ -221,7 +221,9 @@ class LoginFormState extends State<LoginForm> {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    alertHasShown = false;
+                    alertHasShown = false; // this is to fix double pop up based on user event. 
+                    //when you tap login or tap out of form after you entered password, both
+                      //events are as if you submitted so two popups appeared until this boolean fix
                   },
                   width: 120,
                 )
@@ -229,9 +231,6 @@ class LoginFormState extends State<LoginForm> {
             ).show();
           }
 
-          // Timer(Duration(seconds: 3), () {
-          //   Navigator.pop(context);
-          // });
         }
       });
     }
