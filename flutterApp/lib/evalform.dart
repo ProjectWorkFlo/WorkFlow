@@ -9,6 +9,11 @@ import 'package:http/http.dart' as http;
 //with two entry fields
 //email and weight
 
+//updated regular expression in validator of add
+//now only gets up to two decimal places
+//still need to find away to limit the front number to just 1 or 0
+//updated: 4/18/2020
+
 class EvalCustomForm extends StatefulWidget {
   @override
   EvalCustomFormState createState() {
@@ -23,6 +28,11 @@ class EvalCustomFormState extends State<EvalCustomForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    //addEvaluator function uses a http request post call to add the 
+    //given evaluator information into the Google Firebase database.
+    //the function is called when the submit button from the add evaluator 
+    //pop up is pressed.
     Future<void> addEvaluator() {
       const url = 'https://projectworkflow.firebaseio.com/Evaluators.json';
       return http.post(
@@ -55,12 +65,19 @@ class EvalCustomFormState extends State<EvalCustomForm> {
               ),
               //need to add an if statement to check if the email is already in the
               //database
+              //the validator here will check if the field is empty and that the name
+              //has a proper form.
+              //the regular expression used here was created with the help of https://regexr.com/
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Error Code 0001: empty first name field';
+                  return 'Name field cannot be empty';
+                } else if (!value.contains(new RegExp(
+                    r'^(?=.{1,40}$)[a-zA-Z]+(?:[-\s][a-zA-Z]+)*$'))) {
+                  return 'Invalid name entered';
+                } else {
+                  _evalFirstName = value;
+                  return null;
                 }
-                _evalFirstName = value;
-                return null;
               },
             ),
           ),
@@ -76,12 +93,19 @@ class EvalCustomFormState extends State<EvalCustomForm> {
                   hintText: 'Last Name'),
               //need to add an if statement to check if the email is already in the
               //database
+              //the validator here will check if the field is empty and that the name
+              //has a proper form.
+              //the regular expression used here was created with the help of https://regexr.com/
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Error Code 0001: empty last name field';
+                  return 'Name field cannot be empty';
+                } else if (!value.contains(new RegExp(
+                    r'^(?=.{1,40}$)[a-zA-Z]+(?:[-\s][a-zA-Z]+)*$'))) {
+                  return 'Invalid name entered';
+                } else {
+                  _evalLastName = value;
+                  return null;
                 }
-                _evalLastName = value;
-                return null;
               },
             ),
           ),
@@ -97,16 +121,17 @@ class EvalCustomFormState extends State<EvalCustomForm> {
                   hintText: 'Email'),
               //need to add an if statement to check if the email is already in the
               //database
+              //the validator here will check if the field is empty and that the name
+              //has a proper form.              
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Error Code 0001: empty email field';
+                  return 'Email field cannot be empty';
+                } else if (!value.contains('@') || !value.contains('.')) {
+                  return 'Invalid email: example@mail.com';
+                } else {
+                  _evalEmail = value;
+                  return null;
                 }
-
-                if (!value.contains('@') || !value.contains('.')) {
-                  return 'email must be in the form example@mail.com/net/org/edu';
-                }
-                _evalEmail = value;
-                return null;
               },
             ),
           ),
@@ -118,17 +143,18 @@ class EvalCustomFormState extends State<EvalCustomForm> {
                     Icons.score,
                     color: Colors.green,
                   ),
-                  hintText: 'Weight (must be a number)'),
+                  hintText: 'Weight (number 0 - 1)'),
               //need to check if input is a number
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Error Code 0003: empty weight field';
+                  return 'Weight field cannot be empty';
+                } else if (!value
+                    .contains(new RegExp(r'^[+]?[0-9]*\.?[0-9]{0,2}$'))) {
+                  return 'Invalid weight entered';
+                } else {
+                  _evalWeight = value;
+                  return null;
                 }
-                if (!value.contains(new RegExp(r'^[0-9]*.?[0-9]$'))) {
-                  return 'weight must be a number';
-                }
-                _evalWeight = value;
-                return null;
               },
             ),
           ),

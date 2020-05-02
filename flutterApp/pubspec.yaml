@@ -16,6 +16,7 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
+#various dependencies and librarys uses for our application. Further documentation on this can be found of Flutter Dev
 dependencies:
   flutter:
     sdk: flutter
@@ -30,6 +31,12 @@ dependencies:
   pdf: ^1.5.0
   flutter_full_pdf_viewer: ^1.0.6 #these might need to be updated
   path_provider: ^1.5.1 #these might need to be updated
+  auto_size_text: ^2.1.0
+  flutter_flip_view: ^1.0.3
+  flip_panel: ^1.0.1
+  rflutter_alert: ^1.0.3
+
+
   
 dev_dependencies:
   flutter_test:

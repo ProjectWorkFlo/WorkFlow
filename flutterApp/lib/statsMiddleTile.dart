@@ -5,101 +5,90 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 
+
+
+
+
+//create a class and initialize number of forms to 0; 
 class Statistics {
   int numberOfFormsFilled = 0;
-  int numberOfEvaluators = 0;
-  int numberOfCompanies = 0;
-  int avgFormScores = 0;
-
+  
+  
+  //simple constructor
   Statistics(
-      {this.numberOfFormsFilled,
-      this.numberOfEvaluators,
-      this.numberOfCompanies,
-      this.avgFormScores});
-
-  factory Statistics.fromJson(
-      Map<String, dynamic> mapForFormCount,
-      Map<String, dynamic> mapForEvalCount,
-      Map<String, dynamic>
-          mapForCompanyCount /*, Map<String, dynamic> mapForScoreAvg*/) {
+      {this.numberOfFormsFilled
+      });
+// factory constructor is called below and searchs through json format and places number of forms
+  // into classes attribute. To get this, we needed the length/amount of elements in json result. 
+  factory Statistics.fromJson(Map<String, dynamic> mapForFormCount) {
     return Statistics(
+      
       numberOfFormsFilled: mapForFormCount.length,
-      numberOfEvaluators: mapForEvalCount.length,
-      numberOfCompanies: mapForCompanyCount.length,
+     
     );
   }
 
-  factory Statistics.setScroes(dynamic mapForFormCount, int index) {
-    return Statistics(
-      avgFormScores: mapForFormCount['storedValues'][index],
-    );
-  }
+  
 }
-
+//future allows us to perform on something that isn't yet received until fetched or created in time. 
+//in this case, we communicate with our online database, receive json result, perform function on it, 
+//extract the number of forms using our class above. 
 Future<int> fetchStats() async {
   const formURL = 'https://projectworkflow.firebaseio.com/Assessments.json';
-  const evaluatorsURL =
-      'https://projectworkflow.firebaseio.com/Evaluators.json';
-  const companiesURL = 'https://projectworkflow.firebaseio.com/Founder.json';
+ 
   final formJsonResponse = await http.get(formURL);
-  final evalJsonResponse = await http.get(evaluatorsURL);
-  final companyJsonResponse = await http.get(companiesURL);
+ 
 
   Map<String, dynamic> mapOfFetchedForms = json.decode(formJsonResponse.body);
 
-  Map<String, dynamic> mapOfFetchedEvaluators =
-      json.decode(evalJsonResponse.body);
-  Map<String, dynamic> mapOfFetchedCompanies =
-      json.decode(companyJsonResponse.body);
 
   Statistics statsHolder = new Statistics.fromJson(
-      mapOfFetchedForms, mapOfFetchedEvaluators, mapOfFetchedCompanies);
+      mapOfFetchedForms);
 
-  ////////////////////////////////////////////////////////////////////////
-  int overallScoreIndex = 11;
-  int tempInt = 0;
-
-  List<Statistics> listOfScores = new List();
-  dynamic valuesOfMapOfFetchedForms = mapOfFetchedForms.values;
-
-  print(valuesOfMapOfFetchedForms);
-
-  for (var temp in valuesOfMapOfFetchedForms) {
-    Statistics overallScoreHolder =
-        new Statistics.setScroes(temp, overallScoreIndex);
-    if (overallScoreHolder.avgFormScores != null) {
-      tempInt = tempInt + overallScoreHolder.avgFormScores;
-
-      listOfScores.add(overallScoreHolder);
-      print("\nSCORES: ${overallScoreHolder.avgFormScores} \n");
-    }
-  }
-
-  print(
-      "number of forms filled: ${statsHolder.numberOfFormsFilled} & number of evaluators: ${statsHolder.numberOfEvaluators} & number of companies: ${statsHolder.numberOfCompanies}\n");
-  return (statsHolder.numberOfFormsFilled);
+ 
+  return (statsHolder.numberOfFormsFilled);// return number of forms and this function will be called later
 }
-
+//create new class that is stateful meaning it can change based on real live user events
 class StatsMiddleTile extends StatefulWidget {
   @override
   StatsMiddleTileState createState() {
+    //create a state of the implementation below (statslasttilestate)
     return StatsMiddleTileState();
   }
 }
 
+
+
 class StatsMiddleTileState extends State<StatsMiddleTile> {
-  // @override
-//////////////////////////////////////////////
+  //Here we work with the future values we have not received until running the app. here we 
+  //will fetch the number of forms and display it in the middle tile 
+  
 
   Widget fetchStatz = FutureBuilder<int>(
+        //call and receive our return value from fetchstats function. 
     future: fetchStats(),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
+        
         return Container(
-          child: Text("${snapshot.data}"),
+           
+          child: Expanded(
+                      child:AutoSizeText(
+                  "${snapshot.data}",//snapshot.data is the number of forms that we fetched
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontSize: 125,
+                      fontWeight: FontWeight.bold),
+                  minFontSize: 20,
+                  maxLines: 1,
+                 // textAlign: TextAlign.center,
+                ),
+          ),
         );
       } else if (snapshot.hasError) {
+                //this displays predefined error message
         return new Text("${snapshot.error}");
       }
 
@@ -109,7 +98,7 @@ class StatsMiddleTileState extends State<StatsMiddleTile> {
   );
 
 //////////////////////////////////////////////
-
+//build all of our work above into a nice diplay. 
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -119,32 +108,36 @@ class StatsMiddleTileState extends State<StatsMiddleTile> {
         ),
       ),
       padding: const EdgeInsets.all(8),
+      //here we have one container with a column and one row in the column. 
       child: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text("Number of Forms Filled",
-                      style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      )),
+                child: AutoSizeText(
+                  "Number of Forms",
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  minFontSize: 8,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
           ),
+                   //this creates room between title and the number displayed. 
           Flexible(
-            child: Text("some chart here", style: TextStyle(color: Colors.white,),),
-            //GAUGE CAN GO HERE!
-          ),
-          Flexible(
-            child: Card(
-              //shadowColor: Colors.blue[900],
-              child: fetchStatz,
+            child: Divider(
+              indent: 0,
+              endIndent: 0,
+              color: Colors.blue,
+              thickness: 1.0,
             ),
           ),
+           //This is the most important call . This is implemented above and returns the number of forms. 
+          fetchStatz,
         ],
       ),
     );

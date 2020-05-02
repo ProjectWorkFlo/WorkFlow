@@ -31,14 +31,16 @@ class FounderTileState extends State<FounderTile> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Founder Workshop",
-                  style: new TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Founder Workshop",
+                    style: new TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -46,10 +48,11 @@ class FounderTileState extends State<FounderTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18, 6, 18, 0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: founderAdd,
                   leading: Icon(
                     Icons.business,
@@ -77,11 +80,12 @@ class FounderTileState extends State<FounderTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18, 6, 18, 0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
-                  onTap: removeFounder, //add remove functionality here
+                  dense: true,
+                  onTap: removeFounder,
                   leading: Icon(
                     Icons.business,
                     color: Colors.red,
@@ -108,11 +112,12 @@ class FounderTileState extends State<FounderTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18, 6, 18, 0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
-                  onTap: editFounder, //add edit functionality here
+                  dense: true,
+                  onTap: editFounder, 
                   leading: Icon(
                     Icons.business,
                     color: Colors.yellow,
@@ -147,11 +152,33 @@ class FounderTileState extends State<FounderTile> {
   //          of the founder. This data is stored in Google FireBase
   void founderAdd() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Add Founder",
-        textAlign: TextAlign.center,
-      ),
       children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Add Founder",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 20,
+            ),
+          ),
+        ),
         FounderCustomForm(),
       ],
     );
@@ -167,11 +194,35 @@ class FounderTileState extends State<FounderTile> {
   //          removes the choosen founder from the database in Google FireBase
   void removeFounder() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Remove Founder",
-        textAlign: TextAlign.center,
-      ),
-      children: <Widget>[FounderRemove()],
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Remove Founder",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        FounderRemove(),
+      ],
     );
     showDialog(
       context: context,
@@ -185,11 +236,35 @@ class FounderTileState extends State<FounderTile> {
   //          brings up a dialog box with prefilled data that can be edited, changes are pushed up to the database
   void editFounder() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Edit Founder",
-        textAlign: TextAlign.center,
-      ),
-      children: <Widget>[FounderEdit()],
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Edit Founder",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.yellow,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        FounderEdit(),
+      ],
     );
     showDialog(
       context: context,

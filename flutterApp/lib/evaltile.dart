@@ -29,15 +29,17 @@ class EvalTileState extends State<EvalTile> {
       child: Column(
         children: <Widget>[
           Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Evaluator Workshop",
-                  style: new TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+            children: <Widget>[ //
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Evaluator Workshop",
+                    style: new TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -45,10 +47,11 @@ class EvalTileState extends State<EvalTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+             padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: evalAdd,
                   leading: Icon(
                     Icons.person, color: Colors.green,
@@ -68,10 +71,11 @@ class EvalTileState extends State<EvalTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: evalRemove, //add remove functionality here
                   leading: Icon(
                     Icons.supervisor_account, color: Colors.red,
@@ -91,10 +95,11 @@ class EvalTileState extends State<EvalTile> {
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.fromLTRB(18,6,18,0),
               child: Card(
                 color: Colors.grey[600],
                 child: ListTile(
+                  dense: true,
                   onTap: evalEdit, //add edit functionality here
                   leading: Icon(
                     Icons.person, color: Colors.yellow,
@@ -122,11 +127,35 @@ class EvalTileState extends State<EvalTile> {
   //          of the evaluator. This data is stored in Googel FireBase
   void evalAdd() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Add Evaluator",
-        textAlign: TextAlign.center,
-      ),
-      children: <Widget>[EvalCustomForm()],
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Add Evaluator",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        EvalCustomForm()
+      ],
     );
     showDialog(
         context: context,
@@ -139,12 +168,34 @@ class EvalTileState extends State<EvalTile> {
   //          brings up a dialog box and lets user choose an evaluator to delete ontap
   void evalRemove() {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Remove Evaluator",
-        textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
       children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Remove Evaluator",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 20,
+            ),
+            // style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
         EvalRmv(), //add eval widget data in here
       ],
     );
@@ -160,11 +211,33 @@ class EvalTileState extends State<EvalTile> {
   //          still working on it on the back up file before copying it over here 3/30/20
   void evalEdit() async {
     SimpleDialog box = SimpleDialog(
-      title: Text(
-        "Edit Evaluator",
-        textAlign: TextAlign.center,
-      ),
       children: <Widget>[
+        Container(
+          alignment: Alignment.topRight,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "X",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Text(
+            "Edit Evaluator",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.yellow,
+              fontSize: 20,
+            ),
+          ),
+        ),
         EvalEdit(),
       ],
     );

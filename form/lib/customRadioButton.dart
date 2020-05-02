@@ -9,7 +9,7 @@ class CustomRadioButton extends StatefulWidget {
   _CustomRadioButtonState createState() => _CustomRadioButtonState(index);
 }
 
-ScoreValue(int score) {
+scoreValue(int score) {
   if (score == 1) {
     return Container(
       constraints: BoxConstraints(minWidth: 110, maxWidth: 200),
@@ -124,7 +124,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        ScoreValue(selectedValue),
+        scoreValue(selectedValue),
         Radio(
           value: 1,
           groupValue: selectedValue,

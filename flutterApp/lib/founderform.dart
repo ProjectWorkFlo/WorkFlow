@@ -63,8 +63,12 @@ class FounderCustomFormState extends State<FounderCustomForm> {
               validator: (value) {
                 if (value.isEmpty) {
                   return 'empty company name';
+                } else if (!value.contains(new RegExp(
+                    r"^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$"))) {
+                  return 'Invalid name entered';
+                } else {
+                  return null;
                 }
-                return null;
               },
               onSaved: (data) {
                 _founderName = data;

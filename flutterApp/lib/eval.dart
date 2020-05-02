@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-
+//Class Eval is used to store the evaluator information
+//and it is used by evaledit.dart and evalrmv.dart. 
 class Eval
 {
   String firstName;
@@ -21,4 +21,3 @@ class Eval
     );
   }
 }
-

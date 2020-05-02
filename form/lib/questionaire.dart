@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './textWidget.dart';
+import './nameDropdown.dart';
+import './companyDropdown.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import './questionaireResponse.dart';
@@ -8,12 +10,13 @@ import 'package:flutterApp/widgets.dart';
 import 'package:flutterApp/webpageReport.dart';
 import 'package:intl/intl.dart';
 
-class Questionaire extends StatelessWidget {
+class Questionaire extends StatefulWidget {
+  Questionaire({Key key, startup}) : super(key: key);
+  @override
+  _QuestionaireState createState() => _QuestionaireState();
+}
 
-    //another addition
-  var startup;
-  Questionaire({Key key, @required this.startup}) : super(key: key); //change here too
-
+class _QuestionaireState extends State<Questionaire> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,20 +25,15 @@ class Questionaire extends StatelessWidget {
     );
   }
 }
-//(THIS MAKES IT STATEFUL)
-/*
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-*/
+
+String nameDropDown;
+String companyDropDown;
 
 Map map = {
   'pitchName': 'Pitch Name',
-  'firstName': 'First Name',
-  'lastName': 'Last Name',
+  //'firstName': 'First Name',
+  //'lastName': 'Last Name',
+  'evaluatorName': 'FirstLast',
   'email': 'Email',
   'productKnowledge': '(Optional) Product Knowledge: Empty',
   'productFeasability': '(Optional) Product Feasability: Empty',
@@ -52,7 +50,8 @@ Map map = {
   'feedbackForFounder': '(Optional) Feedback For Founder: Empty',
   'internalFeedback': '(Optional) Internal Feedback: Empty',
   'storedValues': new List(12),
-  'dayOfWeek' : 'Day of the week',
+  'dayOfWeek': 'Day of the week',
+  'month': 'month',
 };
 
 final List<int> recordedValues = new List(12);
@@ -60,55 +59,29 @@ bool nullFlag = false;
 
 void setValue(int index, int newValue) {
   map['storedValues'][index] = newValue;
-  print("Map at storedValues index [$index] is ${map['storedValues'][index]}");
 }
 
 void setOutput(String destination, String host) {
   map[destination] = host;
 }
 
-//THIS MAKES IT STATELESS (DELETE THE CODE TO MAKE IT STATEFUL)
 class MyHomePage extends StatelessWidget {
-
-// THIS ONE JOSH!!!
-  var startUpName = 'THIS PLEASE!';
-//adding change here for the test
-  //MyHomePage({Key key, @required this.startUpName}) : super(key: key);
-/*  @override
-
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-}
-class _MyHomePageState extends State<MyHomePage> {
-*/
-
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
   final feedbackForFounderController = TextEditingController();
   final internalFeedbackController = TextEditingController();
   final inputText = "Please rate from 1-5";
-  var pitchName = 'pitchNameHere';
-  DateTime date = DateTime.now();
+  final pitchName = 'pitchNameHere';
+  final DateTime date = DateTime.now();
 
-  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    firstNameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
     feedbackForFounderController.dispose();
     internalFeedbackController.dispose();
-//    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    map['pitchName'] = startUpName; //test by adding a new question form, change added here on 4/2/2020
+    map['pitchName'] = "Software StartUp";
 
     Future<void> addAssessment() {
       const url = 'https://projectworkflow.firebaseio.com/Assessments.json';
@@ -117,8 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
         body: json.encode(
           {
             'pitchName': map['pitchName'],
-            'firstName': map['firstName'],
-            'lastName': map['lastName'],
+//            'firstName': map['firstName'],
+//            'lastName': map['lastName'],
+            'evaluatorName': map['evaluatorName'],
             'email': map['email'],
             'productKnowledge': map['productKnowledge'],
             'productFeasability': map['productFeasability'],
@@ -135,7 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
             'feedbackForFounder': map['feedbackForFounder'],
             'internalFeedback': map['internalFeedback'],
             'storedValues': map['storedValues'],
-            'dayOfWeek' : map['dayOfWeek']
+            'dayOfWeek': map['dayOfWeek'],
+            'month': map['month'],
           },
         ),
       );
@@ -146,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900], //changed 4/4/2020
         title: Text(
-          startUpName, // changed here on 4/2/2020
+          map['pitchName'], // changed here on 4/2/2020
           style: TextStyle(fontSize: 35),
         ),
       ),
@@ -168,30 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: firstNameController,
-                      decoration:
-                          const InputDecoration(helperText: "First name"),
-                    ),
-                  ),
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: lastNameController,
-                      decoration:
-                          const InputDecoration(helperText: "Last name"),
-                    ),
-                  ),
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: emailController,
-                      decoration:
-                          const InputDecoration(helperText: "Email on file"),
-                    ),
-                  ),
+                  NameDropdown(),
+                  CompanyDropdown(),
                 ],
               ),
               Row(
@@ -222,11 +175,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Knowledge',
               ),
               Response(0, 'productKnowledge'),
-              textClass(
+              TextClass(
                 'Feasability',
               ),
               Response(1, 'productFeasability'),
@@ -258,11 +211,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Knowledge',
               ),
               Response(2, 'marketKnowledge'),
-              textClass(
+              TextClass(
                 'Education Ability',
               ),
               Response(3, 'marketEducationAbility'),
@@ -294,11 +247,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Knowledge',
               ),
               Response(4, 'customerPersonaKnowledge'),
-              textClass(
+              TextClass(
                 'Execution',
               ),
               Response(5, 'customerBuyExecution'),
@@ -330,11 +283,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Knowledge',
               ),
               Response(6, 'competitionKnowledge'),
-              textClass(
+              TextClass(
                 'Execution',
               ),
               Response(7, 'competitionExecution'),
@@ -366,11 +319,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Knowledge',
               ),
               Response(8, 'founderExperienceInMarket'),
-              textClass(
+              TextClass(
                 'Execution',
               ),
               Response(9, 'founderBusinessExperience'),
@@ -402,7 +355,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Founder Coachability',
               ),
               Response(10, 'founderCoachableFounder'),
@@ -434,7 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              textClass(
+              TextClass(
                 'Overall',
               ),
               Response(11, 'overall'),
@@ -468,7 +421,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: textClass(
+                child: TextClass(
                   'External',
                 ),
               ),
@@ -483,7 +436,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: textClass(
+                child: TextClass(
                   'Internal',
                 ),
               ),
@@ -496,35 +449,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 maxLines: null,
                 textAlign: TextAlign.center,
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: RaisedButton(
-                  onPressed: () async {
-                    print("This should take us to the new page");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WebpageReport(),
-                      ),
-                    );
-                  },
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomRight,
+              //   child: RaisedButton(
+              //     onPressed: () async {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => WebpageReport(),
+              //         ),
+              //       );
+              //     },
+              //     child: Text('Generate Report'),
+              //   ),
+              // ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: RaisedButton(
                   onPressed: () {
-                    bool firstLastEmail = false;
                     for (var i in map['storedValues']) {
-                      print('$i');
                       if (i == null) {
-                        print("I IS NULL AT INDEX $i");
                         nullFlag = true;
                       }
-                    }
-                    if (firstNameController.text == "") {
-                      print("Error, name or email not entered");
-                      firstLastEmail = true;
                     }
                     if (nullFlag == true) {
                       return showDialog(
@@ -532,40 +478,43 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context) {
                             nullFlag = false;
                             return AlertDialog(
-                              // Retrieve the text the that user has entered by using the
-                              // TextEditingController.
-
                               content: Text(
                                   "Error! Please complete all 1-5 ratings!"),
                             );
                           });
                     } else if (nullFlag != true) {
-                      map['firstName'] = firstNameController.text;
-                      map['lastName'] = lastNameController.text;
-                      map['email'] = emailController.text;
                       map['feedbackForFounder'] =
                           feedbackForFounderController.text;
                       map['internalFeedback'] = internalFeedbackController.text;
                       map['dayOfWeek'] = DateFormat('EEEE').format(date);
+                      map['month'] = DateFormat('MMMM').format(date);
+                      map['evaluatorName'] = nameDropDown;
+                      map['pitchName'] = companyDropDown;
 
                       // Nick Function here
                       addAssessment();
-
                       return showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            // Retrieve the text the that user has entered by using the
-                            // TextEditingController.
-                            content: Text(map['pitchName'] +
+                              // Retrieve the text the that user has entered by using the controller
+                              content: 
+                              /*Text((() {
+                            if (map['productKnowledge'] != null) {
+                              return "product knowledge isn't empty";
+                            }
+                            if (map['productFeasability'] != null) {
+                              return "product feasability isn't empty";
+                            }
+                            return "neither are occupied";
+                          })())*/
+                              
+                              Text(
+                                "$nameDropDown, Thank you for evaluating $companyDropDown!"  +
                                 '\n' +
-                                map['dayOfWeek'] +
+                                map['dayOfWeek'] + 
                                 '\n' +
-                                map['firstName'] +
-                                '\n' +
-                                map['lastName'] +
-                                '\n' +
-                                map['email'] +
+                                map['month'] +
                                 '\n' +
                                 map['productKnowledge'] +
                                 '\n' +
@@ -593,12 +542,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 '\n' +
                                 map['feedbackForFounder'] +
                                 '\n' +
-                                map['internalFeedback']), // +
-                            //'\n' +
-                          );
+                                map['internalFeedback']
+                                ),
+                              );
                         },
                       );
                     }
+                    return null;
                   },
                   child: Text('Submit'),
                 ),
